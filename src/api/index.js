@@ -1,3 +1,3 @@
 import { Login, LoginGoogle } from './auth'
-
-export { Login, LoginGoogle }
+import { AddNew } from './user'
+export { Login, LoginGoogle, AddNew }

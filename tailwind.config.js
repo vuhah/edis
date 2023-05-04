@@ -4,22 +4,24 @@ module.exports = {
 	content: [
 		'./src/pages/**/*.{js,ts,jsx,tsx}',
 		'./src/components/**/*.{js,ts,jsx,tsx}',
+		'./src/layouts/*.js',
 	],
-	darkMode: 'class',
 	theme: {
+		colors: {
+			default: '#1E1E1E',
+			white: '#fff',
+			primary: '#E86A33',
+			slate: 'rgb(212 212 216)',
+		},
 		fontFamily: {
 			sans: ['Roboto', 'sans-serif'],
 		},
-		extend: {},
-		textColor: {
-			primary: '#1E1E1E',
-			secondary: '#ffffff',
+		extend: {
+			'red-500': '#EF4444',
 		},
-		colors: {
-			primary: '#E86A33', // Replace with your desired primary color
-		},
+
 		fontSize: {
-			sm: '0.8rem',
+			sm: '0.9rem',
 			base: '1rem',
 			xl: '1.25rem',
 			'2xl': '1.563rem',

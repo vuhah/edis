@@ -3,3 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+	font-family: 'Roboto', sans-serif;
+	color: '#1E1E1E';
+}

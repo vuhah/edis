@@ -8,7 +8,7 @@ export const Login = async (email, password) => {
 		})
 		return response
 	} catch (error) {
-		throw new Error('Invalid email or password')
+		console.log(error)
 	}
 }
 
