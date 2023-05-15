@@ -59,4 +59,3 @@ export const RejectFriend = async ({ id }) => {
 		return error
 	}
 }
-

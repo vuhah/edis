@@ -53,7 +53,7 @@ export default function AlertStatusUser() {
 						type="primary"
 						onClick={(e) => handleClickDanger(e)}
 					>
-						I'm in danger
+						I&apos;m in danger
 					</Button>
 				</ConfigProvider>
 			</div>
@@ -77,7 +77,7 @@ export default function AlertStatusUser() {
 						type="primary"
 						onClick={(e) => handleClickSafe(e)}
 					>
-						I'm safe
+						I&apos;m safe
 					</Button>
 				</ConfigProvider>
 			</div>

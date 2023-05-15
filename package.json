@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "less-compile": "/node_modules/.bin/lessc --js /styles/style.less /styles/globals.css",
-    "lint": "eslint . && eslint . --fix",
+    "lint": "next lint",
     "format": "prettier --write \"**/*.js\"",
     "dev": "next dev -- --port 3001",
     "build": "next build",

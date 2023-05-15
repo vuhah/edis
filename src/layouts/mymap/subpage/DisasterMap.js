@@ -14,8 +14,7 @@ export default function DisasterMap() {
 	// )
 
 	return (
-		<div className="flex h-full flex-col px-6 py-4 space-y-4">
-
+		<div className="flex h-full flex-col space-y-4 px-6 py-4">
 			<div className="flex items-center space-x-8">
 				<div className="basis-1/2">
 					{/* <h1 className=" ps-1 text-sm font-semibold text-default">

@@ -1,11 +1,6 @@
 import { DISASTER_TYPES } from '@/constant'
 
-export function getItemSider(
-	key,
-	icon,
-	label,
-	children,
-) {
+export function getItemSider(key, icon, label, children) {
 	return {
 		key,
 		icon,

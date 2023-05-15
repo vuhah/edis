@@ -11,7 +11,6 @@ export default function RequestFriendPanel({ props }) {
 		try {
 			const res = await AcceptRequest({ id })
 			dispatch(setRemoveRequest({ id }))
-      
 		} catch (error) {
 			console.log(error)
 		}

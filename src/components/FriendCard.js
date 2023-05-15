@@ -1,7 +1,7 @@
 import { Avatar, Button, Dropdown, Menu } from 'antd'
 import { CaretDownOutlined, DeleteOutlined } from '@ant-design/icons'
 
-const FriendCard = ({friend}) => {
+const FriendCard = ({ friend }) => {
 	const menu = (
 		<Menu>
 			<Menu.Item key="unfriend">

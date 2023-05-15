@@ -12,7 +12,7 @@ module.exports = {
 			white: '#fff',
 			primary: '#E86A33',
 			slate: 'rgb(212 212 216)',
-			green:'#4CB14C',
+			green: '#4CB14C',
 		},
 		fontFamily: {
 			sans: ['Roboto', 'sans-serif'],

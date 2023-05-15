@@ -20,5 +20,6 @@ export const socialSlice = createSlice({
 	},
 })
 
-export const { setRequestsExits, setNewRequest, setRemoveRequest } = socialSlice.actions
+export const { setRequestsExits, setNewRequest, setRemoveRequest } =
+	socialSlice.actions
 export default socialSlice.reducer

@@ -239,7 +239,10 @@ export default function App() {
 		}))
 
 		const onChange = (value, selectedOptions) => {
-			const newProfile = { ...data.profile, location: STATE_NAME_CODE[value[0]] }
+			const newProfile = {
+				...data.profile,
+				location: STATE_NAME_CODE[value[0]],
+			}
 			setData({ ...data, profile: newProfile })
 		}
 
