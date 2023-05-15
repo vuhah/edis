@@ -4,7 +4,7 @@ module.exports = {
 	content: [
 		'./src/pages/**/*.{js,ts,jsx,tsx}',
 		'./src/components/**/*.{js,ts,jsx,tsx}',
-		'./src/layouts/*.js',
+		'./src/layouts/**/*.js',
 	],
 	theme: {
 		colors: {
@@ -12,17 +12,15 @@ module.exports = {
 			white: '#fff',
 			primary: '#E86A33',
 			slate: 'rgb(212 212 216)',
+			green:'#4CB14C',
 		},
 		fontFamily: {
 			sans: ['Roboto', 'sans-serif'],
 		},
-		extend: {
-			'red-500': '#EF4444',
-		},
-
 		fontSize: {
 			sm: '0.9rem',
 			base: '1rem',
+			lg: '1.1rem',
 			xl: '1.25rem',
 			'2xl': '1.563rem',
 			'3xl': '1.953rem',
