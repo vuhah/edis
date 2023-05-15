@@ -1,12 +1,21 @@
-FROM node:alpine
+FROM node:18 AS builder
+
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
+
+COPY . .
+
 # Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install
-# Bundle app source
-COPY . /usr/src/app
+RUN npm ci
+
 RUN npm run build
-EXPOSE 3000
-CMD [ "npm", "start" ]
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.next ./.next
+
+CMD ["npm", "run", "start"]
