@@ -5,6 +5,7 @@ import mapControlSlice from './mapControlSlice'
 import notificationSlice from './notificationSlice'
 import friendSlice from './friendSlice'
 import socialSlice from './socialSlice'
+import notificationTriggerSlice from './notificationsSlices'
 
 export default configureStore({
 	reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
 		notification: notificationSlice,
 		friend: friendSlice,
 		social: socialSlice,
+		notificationTrigger: notificationTriggerSlice,
 	},
 })

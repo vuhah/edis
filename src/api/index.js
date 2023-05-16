@@ -9,6 +9,12 @@ import {
 	GetRequest,
 } from './friend'
 import { Map } from './map'
+import {
+	DisasterNotification,
+	UpdateStatus,
+	FriendSafetyNotification,
+	FriendRequestNotification,
+} from './notification'
 
 export {
 	UpdateSafety,
@@ -24,4 +30,8 @@ export {
 	GetRequest,
 	SearchByEmail,
 	GetUserList,
+	DisasterNotification,
+	UpdateStatus,
+	FriendSafetyNotification,
+	FriendRequestNotification,
 }

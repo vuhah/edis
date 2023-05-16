@@ -4,6 +4,7 @@ import { getItemSider } from '@/utilities'
 import { LogoWithBrandHorizontal } from '@/components/common/Logo'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSubPage } from '@/redux/mapControlSlice'
+import Link from 'next/link'
 
 const { Sider } = Layout
 

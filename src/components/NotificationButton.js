@@ -2,30 +2,62 @@ import React, { useEffect, useState } from 'react'
 import { Badge, Dropdown, Menu } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { BellOutlined } from '@ant-design/icons'
-import { setMarkNotification } from '@/redux/notificationSlice'
+import { DisasterNotification, UpdateStatus } from '@/api'
+import { resetDisasterTrigger } from '@/redux/notificationsSlices'
 
 const NotificationButton = () => {
 	const dispatch = useDispatch()
-	const listNotifications = useSelector((state) => state.notification.listNoti)
-	const [count, setCount] = useState(
-		listNotifications.filter((obj) => obj.mark === false).length,
+
+	const triggerDisasterStatus = useSelector(
+		(state) => state.notificationTrigger.disasterTrigger,
 	)
 
+	const [disasterNotifcation, setDisasterNotification] = useState([])
+
+	async function getDisasterNotification(page, numOfPage) {
+		try {
+			const data = await DisasterNotification(page, numOfPage)
+			setDisasterNotification(data)
+			dispatch(resetDisasterTrigger())
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	useEffect(() => {
-		setCount(listNotifications.filter((obj) => obj.mark === false).length)
-	}, [listNotifications])
+		if (triggerDisasterStatus) {
+			getDisasterNotification(1, 20)
+		}
+	}, [triggerDisasterStatus])
 
 	const handleNotificationClick = () => {
 		// TODO: Handle notification click
 	}
 
-	const handleClearNotifications = (e) => {
-		dispatch(setMarkNotification({ id: e.key }))
+	async function UpdateStatusDisasterNotification(id, status) {
+		try {
+			const data = await UpdateStatus(id, status)
+			getDisasterNotification(1, 12)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
+	const handleClearNotifications = async (e) => {
+		await UpdateStatusDisasterNotification(parseInt(e.key), 'Seen')
+	}
+
+	const [count, setCount] = useState(
+		disasterNotifcation.filter((obj) => obj.status !== 'Seen').length,
+	)
+
+	useEffect(() => {
+		setCount(disasterNotifcation.filter((obj) => obj.status !== 'Seen').length)
+	}, [disasterNotifcation])
+
 	const menu = (
-		<Menu>
-			{listNotifications.map((noti) => (
+		<Menu className="max-h-96 overflow-y-auto">
+			{disasterNotifcation.map((noti) => (
 				<Menu.Item key={noti.id} onClick={(e) => handleClearNotifications(e)}>
 					{noti.body}
 				</Menu.Item>
@@ -34,11 +66,7 @@ const NotificationButton = () => {
 	)
 
 	return (
-		<Dropdown
-			overlay={menu}
-			trigger={['click']}
-			className="flex max-h-40 items-center"
-		>
+		<Dropdown overlay={menu} trigger={['click']} className="flex items-center">
 			<Badge count={count} offset={[0, 2]} onClick={handleNotificationClick}>
 				<BellOutlined style={{ fontSize: '20px' }} />
 			</Badge>

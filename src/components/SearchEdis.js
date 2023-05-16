@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { AddFriend, GetUserList } from '@/api'
 import { AutoComplete, Avatar, Button, List, Typography } from 'antd'
 import { useSelector } from 'react-redux'
+import Image from 'next/image'
+import { STATE_CODE_NAME } from '@/constant'
+
 const { Text } = Typography
 
 export default function SearchEdis() {
@@ -15,7 +18,14 @@ export default function SearchEdis() {
 		const getListUser = async () => {
 			try {
 				const data = await GetUserList()
-				setListUser(data.filter((item) => item.id !== userId))
+				setListUser(
+					data.filter(
+						(item) =>
+							item.id !== userId &&
+							item.profile.name !== '' &&
+							item.profile.name !== null,
+					),
+				)
 			} catch (error) {
 				setListUser([])
 			}
@@ -52,15 +62,35 @@ export default function SearchEdis() {
 				value: item.name,
 				label: (
 					<List.Item>
-						<div className="flex items-center justify-between">
+						<div className="flex items-center justify-between pe-2">
 							<div className="flex items-center space-x-4">
-								<Avatar src={item.profile.avatar} size={52} />
+								{item.profile.avatar ? (
+									<Avatar src={item.profile.avatar} size={52} />
+								) : (
+									<Avatar size={52}>{item.profile.name}</Avatar>
+								)}
 								<div className="flex flex-col">
 									<Text>{item.profile.name}</Text>
-									<Text>{item.email}</Text>
+									<Text>{STATE_CODE_NAME[item.profile.location]}</Text>
 								</div>
 							</div>
-							<p>{isFriend.safetyStatus ? 'Safe' : 'Not safe'}</p>
+							<p>
+								{isFriend.safetyStatus ? (
+									<Image
+										src="/images/shield.png"
+										alt="Safe"
+										width={24}
+										height={24}
+									/>
+								) : (
+									<Image
+										src="/images/warning.png"
+										alt="Safe"
+										width={24}
+										height={24}
+									/>
+								)}
+							</p>
 						</div>
 					</List.Item>
 				),
@@ -70,12 +100,16 @@ export default function SearchEdis() {
 				value: item.name,
 				label: (
 					<List.Item>
-						<div className="flex items-center justify-between">
+						<div className="flex items-center justify-between pe-2">
 							<div className="flex items-center space-x-4">
-								<Avatar src={item.profile.avatar} size={52} />
+								{item.profile.avatar ? (
+									<Avatar src={item.profile.avatar} size={52} />
+								) : (
+									<Avatar size={52}>{item.profile.name}</Avatar>
+								)}
 								<div className="flex flex-col">
 									<Text>{item.profile.name}</Text>
-									<Text>{item.email}</Text>
+									<Text className='text-sm'>{item.email}</Text>
 								</div>
 							</div>
 
@@ -96,6 +130,8 @@ export default function SearchEdis() {
 	return (
 		<AutoComplete
 			className="w-full"
+			size="large"
+			style={{ borderColor: '#ff7875' }}
 			onChange={handleSearch}
 			options={searchResults.map(renderResult)}
 			placeholder="Search by name"

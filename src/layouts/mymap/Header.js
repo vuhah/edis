@@ -20,6 +20,7 @@ import { setCollapsed } from '@/redux/mapControlSlice'
 import { SearchEdis } from '@/components'
 import NotificationButton from '@/components/NotificationButton'
 import SocialButton from '@/components/SocialButton'
+import SafetyButton from '@/components/SafetyButton'
 
 const { Header } = Layout
 
@@ -84,9 +85,9 @@ export default function HeaderMap() {
 					<SearchEdis />
 				</div>
 
-				<div className="flex basis-1/3 justify-end space-x-6">
+				<div className="flex basis-1/3 justify-end space-x-8">
 					<NotificationButton />
-
+					<SafetyButton />
 					<SocialButton />
 
 					<Image

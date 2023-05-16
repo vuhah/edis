@@ -2,46 +2,72 @@ import { useEffect } from 'react'
 import { getAccessToken } from '@/utilities'
 import { SSE } from 'sse.js'
 import { useDispatch } from 'react-redux'
-import { GetRequest } from '@/api'
+import { setFriendRequestTrigger } from '@/redux/notificationsSlices'
 
 export default function SSE_friendNotification() {
-	// const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
-	// useEffect(() => {
-	// 	let url = `${process.env.NEXT_PUBLIC_API_URL}sse/friend-notification`
+	useEffect(() => {
+		let url = `${process.env.NEXT_PUBLIC_API_URL}sse/friend-notification`
+		let source = null
+		let retryInterval = null
+		let retryCount = 0
+		const maxRetryCount = 10
 
-	// 	let source = new SSE(url, {
-	// 		headers: {
-	// 			'Content-Type': 'text/event-stream',
-	// 			Authorization: `Bearer ${getAccessToken()}`,
-	// 		},
-	// 		method: 'GET',
-	// 	})
+		const connectToSSE = () => {
+			source = new SSE(url, {
+				headers: {
+					'Content-Type': 'text/event-stream',
+					Authorization: `Bearer ${getAccessToken()}`,
+				},
+				method: 'GET',
+			})
 
-	// 	source.addEventListener('message', (e) => {
-	// 		if (e.data !== '[DONE]') {
-	// 			console.log(e);
-	// 			if (e.data !== '[]') {
-	// 				const getRequest = async () => {
-	// 					try {
-	// 						const data = await GetRequest()
-	// 						dispatch(setRequestsExits({ listRequests: data }))
-	// 					} catch (error) {
-	// 						console.log(error)
-	// 					}
-	// 				}
-	// 				getRequest()
-	// 				console.log(e.data);
-	// 			}
-	// 		} else {
-	// 			source.close()
-	// 		}
-	// 	})
-	// 	source.stream()
-	// }, [])
+			source.addEventListener('message', (e) => {
+				console.log(e.data)
+				if (e.data !== '[DONE]') {
+					dispatch(setFriendRequestTrigger())
+				} else {
+					source.close()
+					if (retryInterval) {
+						clearInterval(retryInterval)
+					}
+					console.log('SSE connection closed')
+				}
+			})
+
+			source.addEventListener('error', (error) => {
+				console.error('SSE error:', error)
+				reconnectToSSE()
+			})
+
+			source.stream()
+		}
+
+		const reconnectToSSE = () => {
+			if (retryCount < maxRetryCount) {
+				retryCount++
+				console.log(
+					`Retrying SSE connection. Attempt ${retryCount} of ${maxRetryCount}`,
+				)
+				clearInterval(retryInterval)
+				retryInterval = setInterval(connectToSSE, 500) // Retry every 5 seconds
+			} else {
+				console.log(`Maximum retry count reached. SSE connection failed.`)
+			}
+		}
+
+		connectToSSE()
+
+		return () => {
+			if (source) {
+				source.close()
+			}
+			if (retryInterval) {
+				clearInterval(retryInterval)
+			}
+		}
+	}, [])
 
 	return null
 }
-
-//"[{"id":650,"senderId":1,"receiverId":3,"objectId":3,"senderType":"User","status":"Created","type":"FriendRequest","title":"New friend request","body":"From Baubau","createdAt":"2023-05-15T05:55:00.202Z","updatedAt":"2023-05-15T05:55:00.202Z"}]"
-//"[{\"id\":651,\"senderId\":5,\"receiverId\":3,\"objectId\":4,\"senderType\":\"User\",\"status\":\"Created\",\"type\":\"FriendRequest\",\"title\":\"New friend request\",\"body\":\"From Vu\",\"createdAt\":\"2023-05-15T05:57:27.579Z\",\"updatedAt\":\"2023-05-15T05:57:27.579Z\"}]"

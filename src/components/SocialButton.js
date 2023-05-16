@@ -2,53 +2,76 @@ import React, { useEffect, useState } from 'react'
 import { Badge, Dropdown, Menu } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserAddOutlined } from '@ant-design/icons'
-import { GetRequest } from '@/api'
-import { setRemoveRequest, setRequestsExits } from '@/redux/socialSlice'
-import RequestFriendPanel from './RequestFriendPanel'
+import { FriendRequestNotification } from '@/api'
+import { resetFriendRequestTrigger } from '@/redux/notificationsSlices'
 
 const SocialButton = () => {
 	const dispatch = useDispatch()
-	const listRequest = useSelector((state) => state.social.listRequest)
-	const [count, setCount] = useState(listRequest.length)
 
-	useEffect(() => {
-		const getRequest = async () => {
-			try {
-				const data = await GetRequest()
-				dispatch(setRequestsExits({ listRequests: data }))
-			} catch (error) {
-				console.log(error)
-			}
+	const triggerFriendRequest = useSelector(
+		(state) => state.notificationTrigger.friendRequestTrigger,
+	)
+
+	const [friendRequestNotifcation, setfriendRequestNotifcation] = useState([])
+
+	async function getFriendRequestNotification() {
+		try {
+			const data = await FriendRequestNotification()
+			setfriendRequestNotifcation(data)
+			dispatch(resetFriendRequestTrigger())
+		} catch (error) {
+			console.log(error)
 		}
-		getRequest()
-	}, [listRequest])
+	}
 
 	useEffect(() => {
-		setCount(listRequest.length)
-	}, [listRequest])
+		if (triggerFriendRequest) {
+			getFriendRequestNotification()
+		}
+	}, [triggerFriendRequest])
 
 	const handleNotificationClick = () => {
 		// TODO: Handle notification click
 	}
 
-	const handleClearNotifications = (e) => {
-		dispatch(setRemoveRequest({ id: e.key }))
+	async function UpdateStatusDisasterNotification(id, status) {
+		try {
+			const data = await UpdateStatus(id, status)
+			getFriendRequestNotification()
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
+	const handleClearNotifications = async (e) => {
+		await UpdateStatusDisasterNotification(parseInt(e.key), 'Seen')
+	}
+
+	const [count, setCount] = useState(
+		friendRequestNotifcation.filter((obj) => obj.status !== 'Seen').length,
+	)
+
+	useEffect(() => {
+		setCount(
+			friendRequestNotifcation.filter((obj) => obj.status !== 'Seen').length,
+		)
+	}, [friendRequestNotifcation])
+
 	const menu = (
-		<Menu>
-			{listRequest.map((request) => (
+		<Menu className='max-h-96 overflow-y-auto'>
+			{friendRequestNotifcation.map((request) => (
 				<Menu.Item
-					key={request.user.id}
+					key={request.id}
 					onClick={(e) => handleClearNotifications(e)}
 				>
-					<RequestFriendPanel
+					{/* <RequestFriendPanel
 						props={{
 							id: request.requestId,
 							avatar: request.user.profile.avatar,
 							name: request.user.profile.name,
 						}}
-					/>
+					/> */}
+					{request.title} {request.body}
 				</Menu.Item>
 			))}
 		</Menu>

@@ -40,10 +40,10 @@ export const AcceptRequest = async ({ id }) => {
 	}
 }
 
-export const UnFriend = async ({ userId }) => {
+export const UnFriend = async ({ id }) => {
 	try {
 		const response = await axiosInstance.post('friends/unfriend', {
-			userId: userId,
+			userId: id,
 		})
 		return response
 	} catch (error) {

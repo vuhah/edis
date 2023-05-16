@@ -7,10 +7,6 @@ export default function AlertStatusState() {
 		useSelector((state) => state.user.safetyLocation),
 	)
 
-	const [location, setLocation] = useState(
-		useSelector((state) => state.user.location),
-	)
-
 	if (safetyLocation)
 		return (
 			<div className="flex items-center justify-between space-x-10 ">
