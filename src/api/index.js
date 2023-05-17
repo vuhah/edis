@@ -6,6 +6,7 @@ import {
 	AcceptRequest,
 	RejectFriend,
 	UnFriend,
+	FriendRecommend,
 	GetRequest,
 } from './friend'
 import { Map } from './map'
@@ -34,4 +35,5 @@ export {
 	UpdateStatus,
 	FriendSafetyNotification,
 	FriendRequestNotification,
+	FriendRecommend,
 }

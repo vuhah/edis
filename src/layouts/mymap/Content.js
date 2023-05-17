@@ -13,10 +13,6 @@ export default function ContentMap() {
 			{currentSubPage === 'dashboard' && <Dashboard />}
 			{currentSubPage === 'friend' && <Friends />}
 			{currentSubPage === 'settings' && <Settings />}
-			{/* <DisasterMap id="map" />
-			<Dashboard id="dashboard" />
-			<Friends id="friend" />
-			<Settings id="settings" /> */}
 		</Content>
 	)
 }

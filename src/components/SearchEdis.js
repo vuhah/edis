@@ -109,7 +109,7 @@ export default function SearchEdis() {
 								)}
 								<div className="flex flex-col">
 									<Text>{item.profile.name}</Text>
-									<Text className='text-sm'>{item.email}</Text>
+									<Text className="text-sm">{item.email}</Text>
 								</div>
 							</div>
 

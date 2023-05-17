@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Badge, Dropdown, Menu } from 'antd'
+import { Badge, Dropdown, Menu, Card, Avatar } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { SafetyOutlined } from '@ant-design/icons'
 import { FriendSafetyNotification, UpdateStatus } from '@/api'
 import { resetFriendSafetyTrigger } from '@/redux/notificationsSlices'
+import Image from 'next/image'
 
 const SafetyButton = () => {
 	const dispatch = useDispatch()
@@ -48,20 +49,94 @@ const SafetyButton = () => {
 	}
 
 	const [count, setCount] = useState(
-		friendSafetyNotifcation.filter((obj) => obj.status !== 'Seen').length,
+		friendSafetyNotifcation.filter((obj) => obj.notification.status !== 'Seen')
+			.length,
 	)
 
 	useEffect(() => {
 		setCount(
-			friendSafetyNotifcation.filter((obj) => obj.status !== 'Seen').length,
+			friendSafetyNotifcation.filter(
+				(obj) => obj.notification.status !== 'Seen',
+			).length,
 		)
 	}, [friendSafetyNotifcation])
 
 	const menu = (
 		<Menu className="max-h-96 overflow-y-auto">
 			{friendSafetyNotifcation.map((noti) => (
-				<Menu.Item key={noti.id} onClick={(e) => handleClearNotifications(e)}>
-					{noti.body}
+				<Menu.Item
+					key={noti.notification.id}
+					onClick={(e) => handleClearNotifications(e)}
+				>
+					<div className="h-30 flex w-96 items-start justify-between">
+						{noti.notification.body.includes('as Safe') && (
+							<Card
+								className="w-full"
+								title={
+									<div className="flex justify-between">
+										{
+											<div className="flex basis-2/3 items-center space-x-2">
+												<Avatar src={noti.profile.avatar} size={24} />
+												<p>{noti.profile.name}</p>
+											</div>
+										}
+										<Image
+											src="/images/shield.png"
+											alt="safe"
+											width={24}
+											height={24}
+										/>
+										{noti.notification.status !== 'Seen' ? (
+											<div className="flex basis-1/6 justify-end">
+												<Badge color="#f50" />
+											</div>
+										) : (
+											<div className="basis-1/6">
+												<></>
+											</div>
+										)}
+									</div>
+								}
+								size="small"
+							>
+								{noti.notification.body}
+							</Card>
+						)}
+
+						{noti.notification.body.includes('as Not Safe') && (
+							<Card
+								className="w-full"
+								title={
+									<div className="flex justify-between">
+										{
+											<div className="flex basis-4/6 items-center space-x-2">
+												<Avatar src={noti.profile.avatar} size={24} />
+												<p>{noti.profile.name}</p>
+											</div>
+										}
+										<Image
+											src="/images/warning.png"
+											alt="safe"
+											width={24}
+											height={24}
+										/>
+										{noti.notification.status !== 'Seen' ? (
+											<div className="flex basis-1/6 justify-end">
+												<Badge color="#f50" />
+											</div>
+										) : (
+											<div className="basis-1/6">
+												<></>
+											</div>
+										)}
+									</div>
+								}
+								size="small"
+							>
+								{noti.notification.body}
+							</Card>
+						)}
+					</div>
 				</Menu.Item>
 			))}
 		</Menu>

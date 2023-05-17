@@ -2,7 +2,6 @@ import { AcceptRequest, RejectFriend } from '@/api'
 import { Avatar, ConfigProvider, Button } from 'antd'
 
 export default function RequestFriendPanel({ props }) {
-
 	async function handleAccept(id) {
 		try {
 			const res = await AcceptRequest({ id })

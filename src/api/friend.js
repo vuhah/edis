@@ -59,3 +59,12 @@ export const RejectFriend = async ({ id }) => {
 		return error
 	}
 }
+
+export const FriendRecommend = async () => {
+	try {
+		const res = await axiosInstance.get('friends/recommend')
+		return res.data
+	} catch (error) {
+		return error
+	}
+}

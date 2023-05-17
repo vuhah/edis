@@ -20,7 +20,7 @@ export const FriendSafetyNotification = async () => {
 	}
 }
 
-export const FriendRequestNotification = async()=>{
+export const FriendRequestNotification = async () => {
 	try {
 		const response = await axiosInstance.get(`notification/list?type=friends`)
 		return response.data

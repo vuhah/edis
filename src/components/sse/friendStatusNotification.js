@@ -24,7 +24,7 @@ export default function SSE_friendStatusNotification() {
 			})
 
 			source.addEventListener('message', (e) => {
-				console.log(e);
+				console.log(e)
 				if (e.data !== '[DONE]') {
 					dispatch(setFriendSafetyTrigger())
 				} else {

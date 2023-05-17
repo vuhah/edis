@@ -1,14 +1,22 @@
 import { ConfigProvider, Layout, Menu } from 'antd'
 import Image from 'next/image'
 import { getItemSider } from '@/utilities'
-import { LogoWithBrandHorizontal } from '@/components/common/Logo'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSubPage } from '@/redux/mapControlSlice'
-import Link from 'next/link'
 
 const { Sider } = Layout
 
 const items = [
+	getItemSider(
+		'logo',
+		<Image
+			src="/images/logoImage.png"
+			alt="logo icon"
+			width={24}
+			height={24}
+		/>,
+		<p className=" text-lg font-extrabold text-primary">edis</p>,
+	),
 	getItemSider(
 		'map',
 		<Image
@@ -40,6 +48,16 @@ const items = [
 		'Friends',
 	),
 	getItemSider(
+		'telegram',
+		<Image
+			src="/images/sidebaricon/telegram.png"
+			alt="telegram"
+			width={24}
+			height={24}
+		/>,
+		'Telegram Channel',
+	),
+	getItemSider(
 		'settings',
 		<Image
 			src="/images/sidebaricon/setting.png"
@@ -48,11 +66,6 @@ const items = [
 			height={24}
 		/>,
 		'Settings',
-		[
-			getItemSider('account', <></>, 'Account information'),
-			getItemSider('password', <></>, 'Password'),
-			getItemSider('location', <></>, 'Location'),
-		],
 	),
 	getItemSider(
 		'logout',
@@ -85,22 +98,12 @@ export default function SiderMap() {
 				collapsible
 				collapsed={collapsedState}
 				collapsedWidth={80}
-				width={280}
+				width={240}
 				style={{
 					background: '#fff',
 					fontFamily: 'Roboto, san-serif',
 				}}
 			>
-				<div className="ms-5 mt-3">
-					{collapsedState ? (
-						<div className="h-8"></div>
-					) : (
-						<>
-							<LogoWithBrandHorizontal props={{ size: 36 }} />
-						</>
-					)}
-				</div>
-
 				<Menu
 					mode="inline"
 					defaultSelectedKeys={'map'}
@@ -110,7 +113,7 @@ export default function SiderMap() {
 				>
 					{items.map((item) => (
 						<Menu.Item
-							className="hover:bg-violet-600 h-60 space-x-4 text-sm font-semibold text-default"
+							className="hover:bg-violet-600 h-60 space-x-4 text-small font-bold text-default"
 							key={item.key}
 							icon={item.icon}
 						>

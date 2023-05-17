@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
-import { mapLocations, levelMap, DANGEROUS_LEVEL } from '@/utilities/disasters.util'
+import {
+	mapLocations,
+	levelMap,
+	DANGEROUS_LEVEL,
+} from '@/utilities/disasters.util'
 import { Pagination, Table, Tag } from 'antd'
 import useSWR from 'swr'
 import { API_URL } from '@/utilities/host.util'

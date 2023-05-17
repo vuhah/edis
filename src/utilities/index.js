@@ -3,7 +3,7 @@ import { beforeUpload } from './firebase'
 import { mapParamPrepare, randomCoordinate } from './map'
 import { getItemSider, DisasterPanel } from './object'
 import { getListEmailUser } from './friends'
-
+import { formatDate } from './date'
 export {
 	decodeToken,
 	setAccessToken,
@@ -14,4 +14,5 @@ export {
 	DisasterPanel,
 	getListEmailUser,
 	randomCoordinate,
+	formatDate,
 }
