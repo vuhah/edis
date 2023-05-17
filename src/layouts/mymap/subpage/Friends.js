@@ -119,7 +119,7 @@ export default function Friends() {
 						<div>
 							{friends.length === 0 && (
 								<div className="ms-2">
-									You don't have any friends in your friend list.
+									You do not have any friends in your friend list.
 								</div>
 							)}
 
@@ -194,7 +194,7 @@ export default function Friends() {
 					{currentTab === 'section2' && (
 						<div>
 							{resquest.length === 0 && (
-								<div className="px-2">You don't have any friend requests.</div>
+								<div className="px-2">You do not have any friend requests.</div>
 							)}
 							{resquest.length > 0 && (
 								<div className="grid h-max grid-cols-2 gap-14">
@@ -267,7 +267,7 @@ export default function Friends() {
 					{currentTab === 'section3' && (
 						<div>
 							{recommendatios.length === 0 && (
-								<div className="px-2">You don't have any friend requests.</div>
+								<div className="px-2">You do not have any friend requests.</div>
 							)}
 							{recommendatios.length > 0 && (
 								<div className="grid h-max grid-cols-2 gap-14">
